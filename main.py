@@ -29,6 +29,11 @@ def draw_whole_snake(entity_list, block):
         pygame.draw.rect(dis, green, [x[0], x[1], block, block])
 
 
+def show_score(score):
+    value = score_font.render("Your score: " + str(score), True, black)
+    dis.blit(value, [0, 0])
+
+
 def message(msg, color):
     mesg = font_style.render(msg, True, color)
     dis.blit(mesg, [dis_width / 3, dis_height / 3])
@@ -42,6 +47,8 @@ def game_loop():
 
     snake_len = 1
     snake_list = []
+
+    score = 0
 
     # initial coordinates of the food based on the display's measurements & the snake's;
     # the display's grid will have each cell 10 units wide.
@@ -101,12 +108,13 @@ def game_loop():
                 game_close = True
 
         draw_whole_snake(snake_list, snake_block)
+        show_score(score)
 
         pygame.display.update()
 
         if x1 == food_x1 and y1 == food_y1:
             snake_len += 1
-            print("Current length: " + str(snake_len))
+            score += 1
             food_x1 = round(random.randrange(0, dis_width - snake_block) / 10.0) * 10.0
             food_y1 = round(random.randrange(0, dis_height - snake_block) / 10.0) * 10.0
 
