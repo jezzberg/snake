@@ -20,8 +20,8 @@ snake_block = 10
 snake_speed = 15
 
 clock = pygame.time.Clock()
-font_style = pygame.font.SysFont("Marker Felt", 25)
-score_font = pygame.font.SysFont("comicsansms", 35)
+font_style = pygame.font.SysFont("Marker Felt", 20)
+score_font = pygame.font.SysFont("comicsansms", 25)
 
 
 def draw_whole_snake(entity_list, block):
@@ -31,7 +31,7 @@ def draw_whole_snake(entity_list, block):
 
 def show_score(score):
     value = score_font.render("Your score: " + str(score), True, black)
-    dis.blit(value, [0, 0])
+    dis.blit(value, [10, 10])
 
 
 def message(msg, color):
@@ -57,6 +57,7 @@ def game_loop():
 
     game_over = False
     game_close = False
+    current_direction = 0
     while not game_over:
 
         while game_close:
@@ -79,16 +80,20 @@ def game_loop():
             if event.type == pygame.QUIT:
                 game_over = True
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_LEFT:
+                if event.key == pygame.K_LEFT and current_direction != "RIGHT":
+                    current_direction = "LEFT"
                     x1_update = -snake_block
                     y1_update = 0
-                elif event.key == pygame.K_RIGHT:
+                elif event.key == pygame.K_RIGHT and current_direction != "LEFT":
+                    current_direction = "RIGHT"
                     x1_update = snake_block
                     y1_update = 0
-                elif event.key == pygame.K_UP:
+                elif event.key == pygame.K_UP and current_direction != "DOWN":
+                    current_direction = "UP"
                     y1_update = -snake_block
                     x1_update = 0
-                elif event.key == pygame.K_DOWN:
+                elif event.key == pygame.K_DOWN and current_direction != "UP":
+                    current_direction = "DOWN"
                     y1_update = snake_block
                     x1_update = 0
 
